@@ -1,23 +1,21 @@
-import React, { useRef, useCallback, useState } from 'react';
-import { FiUserPlus } from 'react-icons/fi';
+import React, { useCallback, useRef } from 'react';
+import { FiArrowLeft } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
 import { Button, notification } from 'antd';
-import { Background, Container, Content } from './styled';
-import Input from '../../components/input';
-import getValidationErrors from '../../utils/getValidationErrors';
-import { useAuth } from '../../hooks/authContext';
-import ILogin from '../../meta-data/interfaces/ILogin';
+import { Container, Content, Background } from './styled';
 import logo from '../../assets/img/logo.png';
+import getValidationErrors from '../../utils/getValidationErrors';
+import api from '../../services/api';
+import { IRegister } from '../../meta-data/interfaces/IRegister';
+import Input from '../../components/input';
+
 import { IError } from '../../meta-data/interfaces/IError';
 
-const Login: React.FC = () => {
-  const [loading, setLoading] = useState<boolean>(false);
+const Register: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
-
-  const { signIn } = useAuth();
   const history = useHistory();
 
   const toast = (type: string, message: string, description: string) => {
@@ -29,12 +27,12 @@ const Login: React.FC = () => {
   };
 
   const handleSubmit = useCallback(
-    async (data: ILogin) => {
+    async (data: IRegister) => {
       try {
-        setLoading(true);
         formRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
+          name: Yup.string().required('Nome obrigatório'),
           email: Yup.string()
             .required('Email obrigatório')
             .email('Digite um e-mail válido'),
@@ -47,43 +45,40 @@ const Login: React.FC = () => {
           abortEarly: false,
         });
 
-        await signIn({
-          email: data.email,
-          password: data.password,
-        });
-
-        history.push('/home');
+        await api.post('/account', data);
+        history.push('/');
+        toast(
+          'success',
+          'Cadastro realizado com sucesso!',
+          'Você já pode logar no sistema',
+        );
       } catch (err) {
-        console.log(err);
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
           formRef.current?.setErrors(errors);
         } else {
           const error: IError = err;
-          toast('error', 'Erro na autenticação', error.message);
+          toast('error', 'Erro no cadastro', error.message);
         }
-      } finally {
-        setLoading(false);
       }
     },
-    [signIn, history],
+    [history],
   );
 
   return (
     <Container>
       <Content>
+        <img style={{ height: 200 }} src={logo} alt="logo" />
         <Form ref={formRef} onSubmit={handleSubmit}>
-          <img style={{ height: 200 }} src={logo} alt="logo" />
-          <h1>Faça seu login</h1>
+          <h1>Faça seu cadastro</h1>
+          <Input name="name" placeholder="Nome" />
           <Input name="email" placeholder="E-mail" />
           <Input name="password" type="password" placeholder="Senha" />
-          <Button loading={loading} htmlType="submit">
-            Entrar
-          </Button>
+          <Button htmlType="submit">Cadastrar</Button>
         </Form>
-        <Link to="/criar-conta">
-          <FiUserPlus />
-          Criar conta
+        <Link to="/">
+          <FiArrowLeft />
+          Voltar para o login
         </Link>
       </Content>
       <Background />
@@ -91,4 +86,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default Register;
