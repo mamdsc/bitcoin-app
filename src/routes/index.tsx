@@ -1,9 +1,12 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
+import Login from '../pages/login';
+import RouteContainer from './private';
 
 const Routes: React.FC = () => (
   <Switch>
-    <Route path="/" exact component={() => <h1>Hello</h1>} />
+    <RouteContainer path="/home" component={() => <h1>Hello</h1>} isPrivate />
+    <RouteContainer path="/" exact component={Login} />
   </Switch>
 );
 
