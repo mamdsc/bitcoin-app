@@ -1,11 +1,15 @@
-import { Row, Col, Card } from 'antd';
+import { Row, Col, Card, Table } from 'antd';
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Layout from '../../components/layout';
+import { IPosition } from '../../meta-data/interfaces/IPosition';
 import { IPrice } from '../../meta-data/interfaces/IPrice';
 import { IAppState } from '../../redux';
 import { fetchBalanceRequest } from '../../redux/ducks/account/actions';
-import { fetchPricesRequest } from '../../redux/ducks/crypto/actions';
+import {
+  fetchPositionRequest,
+  fetchPricesRequest,
+} from '../../redux/ducks/crypto/actions';
 import { Container } from './styled';
 
 const Dashboard: React.FC = () => {
@@ -19,17 +23,53 @@ const Dashboard: React.FC = () => {
   const isLoadingPrices: boolean = useSelector(
     (state: IAppState) => state.crypto.isLoadingPrices,
   );
+  const position: IPosition[] = useSelector(
+    (state: IAppState) => state.crypto.position,
+  );
+  const isLoadingPosition: boolean = useSelector(
+    (state: IAppState) => state.crypto.isLoadingPosition,
+  );
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchBalanceRequest());
     dispatch(fetchPricesRequest());
+    dispatch(fetchPositionRequest());
   }, [dispatch]);
+
+  const columns = [
+    {
+      title: 'Data da compra',
+      dataIndex: 'purchasedDate',
+      key: 'purchasedDate',
+    },
+    {
+      title: 'Valor investido',
+      dataIndex: 'purchaseAmount',
+      key: 'purchaseAmount',
+    },
+    {
+      title: 'Valor do btc compra',
+      dataIndex: 'purchasedBtcAmount',
+      key: 'purchasedBtcAmount',
+    },
+    {
+      title: 'Percentual de variação',
+      dataIndex: 'variation',
+      key: 'variation',
+    },
+    {
+      title: 'Valor bruto atual',
+      dataIndex: 'currentBtcAmount',
+      key: 'currentBtcAmount',
+    },
+  ];
 
   return (
     <Layout>
       <Container>
+        <h2>Dashboard</h2>
         <div className="cards">
           <Row gutter={16}>
             <Col span={8}>
@@ -74,6 +114,14 @@ const Dashboard: React.FC = () => {
               </Card>
             </Col>
           </Row>
+        </div>
+        <div>
+          <h2>Meus investimentos</h2>
+          <Table
+            dataSource={position}
+            columns={columns}
+            loading={isLoadingPosition}
+          />
         </div>
       </Container>
     </Layout>

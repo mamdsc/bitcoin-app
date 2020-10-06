@@ -6,5 +6,6 @@ export const Container = styled(Layout)`
 
   .ant-layout-content {
     padding: 50px;
+    overflow-y: auto;
   }
 `;
