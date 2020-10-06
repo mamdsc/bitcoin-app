@@ -6,6 +6,7 @@ import React, {
   useCallback,
 } from 'react';
 import { useField } from '@unform/core';
+import { Tooltip } from 'antd';
 import { Container } from './styled';
 
 interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -39,14 +40,15 @@ const Input: React.FC<IInputProps> = ({ name, ...rest }) => {
 
   return (
     <Container isFocused={isFocused} isFilled={isFilled} isErrored={!!error}>
-      <input
-        defaultValue={defaultValue}
-        ref={inputRef}
-        onFocus={handleInputFocus}
-        onBlur={handleInputBlur}
-        {...rest}
-      />
-      {error && <div>{error}</div>}
+      <Tooltip title={error || ''}>
+        <input
+          defaultValue={defaultValue}
+          ref={inputRef}
+          onFocus={handleInputFocus}
+          onBlur={handleInputBlur}
+          {...rest}
+        />
+      </Tooltip>
     </Container>
   );
 };

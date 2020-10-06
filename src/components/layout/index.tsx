@@ -1,20 +1,32 @@
 import React from 'react';
 import { Layout, Menu } from 'antd';
+import { useHistory } from 'react-router-dom';
 import { Container } from './styled';
+import { useAuth } from '../../hooks/authContext';
 
 const { Header, Content, Footer } = Layout;
 
 const LayoutContainer: React.FC = ({ children }) => {
+  const { signOut } = useAuth();
+  const history = useHistory();
+
   return (
     <Container>
       <Header>
         <div className="logo" />
-        <Menu theme="dark" mode="horizontal">
-          <Menu.Item key="1">Dashboard</Menu.Item>
-          <Menu.Item key="2">Depósitos</Menu.Item>
+        <Menu theme="dark" mode="horizontal" className="menu-header">
+          <Menu.Item key="1" onClick={() => history.push('/home')}>
+            Dashboard
+          </Menu.Item>
+          <Menu.Item key="2" onClick={() => history.push('/depositar')}>
+            Depósitos
+          </Menu.Item>
           <Menu.Item key="3">Compra</Menu.Item>
           <Menu.Item key="4">Venda</Menu.Item>
           <Menu.Item key="5">Extrato</Menu.Item>
+          <Menu.Item key="6" onClick={signOut} style={{ float: 'right' }}>
+            Sair
+          </Menu.Item>
         </Menu>
       </Header>
       <Content>

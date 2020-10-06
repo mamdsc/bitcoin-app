@@ -15,4 +15,26 @@ const fetchBalanceError = (message: string): IReducerAction<string> => ({
   payload: message,
 });
 
-export { fetchBalanceRequest, fetchBalanceSuccess, fetchBalanceError };
+const postDepositRequest = (amount: number): IReducerAction<number> => ({
+  type: AccountActionTypes.POST_DEPOSIT_REQUEST,
+  payload: amount,
+});
+
+const postDepositSuccess = (deposit: boolean): IReducerAction<boolean> => ({
+  type: AccountActionTypes.POST_DEPOSIT_SUCCESS,
+  payload: deposit,
+});
+
+const postDepositError = (message: string): IReducerAction<string> => ({
+  type: AccountActionTypes.POST_DEPOSIT_ERROR,
+  payload: message,
+});
+
+export {
+  fetchBalanceRequest,
+  fetchBalanceSuccess,
+  fetchBalanceError,
+  postDepositRequest,
+  postDepositSuccess,
+  postDepositError,
+};
