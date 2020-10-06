@@ -10,6 +10,10 @@ api.interceptors.response.use(
   },
   async error => {
     if (error.response && error.response.data) {
+      if (error.response.data.name === 'TokenExpiredError') {
+        localStorage.removeItem('@BitcoinApp:token');
+        document.location.reload(true);
+      }
       return Promise.reject(error.response.data);
     }
     return Promise.reject(error);
