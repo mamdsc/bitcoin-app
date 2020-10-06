@@ -20,9 +20,8 @@ function* handleBalance() {
 
 function* handleDeposit(action: IReducerAction<number>) {
   try {
-    const response = yield call(Account.getDeposit, action.payload);
-    yield put(fetchBalanceSuccess(formatCurrency(response.balance)));
-    yield put(postDepositSuccess(true));
+    const response = yield call(Account.postDeposit, action.payload);
+    yield put(postDepositSuccess(formatCurrency(response.balance)));
   } catch (err) {
     yield put(fetchBalanceError(err));
   }

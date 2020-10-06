@@ -6,14 +6,13 @@ const INITIAL_STATE: IAccountState = {
   balance: '',
   isLoadingBalance: false,
   errorBalance: {} as IError,
-  deposit: false,
   isLoadingDeposit: false,
   errorDeposit: {} as IError,
 };
 
 export default function accountReducer(
   state = INITIAL_STATE,
-  action: IReducerAction<string | IError | boolean>,
+  action: IReducerAction<string | IError>,
 ) {
   switch (action.type) {
     case AccountActionTypes.FETCH_BALANCE_REQUEST: {
@@ -41,13 +40,15 @@ export default function accountReducer(
       return {
         ...state,
         isLoadingDeposit: true,
+        isLoadingBalance: true,
       };
     }
     case AccountActionTypes.POST_DEPOSIT_SUCCESS: {
       return {
         ...state,
         isLoadingDeposit: false,
-        deposit: action.payload as boolean,
+        isLoadingBalance: false,
+        balance: action.payload as string,
         errorDeposit: {} as IError,
       };
     }

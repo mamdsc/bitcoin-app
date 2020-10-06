@@ -11,9 +11,13 @@ import {
   fetchPositionSuccess,
   fetchPricesError,
   fetchPricesSuccess,
+  postSellError,
+  postSellSuccess,
 } from './actions';
 import { CryptoActionTypes } from './types';
 import { DAY_MONTH_YEAR_HOUR } from '../../../utils/constants';
+import { IReducerAction } from '../rootReducer';
+import { fetchBalanceRequest } from '../account/actions';
 
 function* handlePrice() {
   try {
@@ -46,7 +50,18 @@ function* handlePosition() {
   }
 }
 
+function* handleSell(action: IReducerAction<number>) {
+  try {
+    const response = yield call(Crypto.postSell, action.payload);
+    yield put(postSellSuccess(response));
+    yield put(fetchBalanceRequest());
+  } catch (err) {
+    yield put(postSellError(err));
+  }
+}
+
 export default all([
   takeLatest(CryptoActionTypes.FETCH_PRICE_REQUEST, handlePrice),
   takeLatest(CryptoActionTypes.FETCH_POSITION_REQUEST, handlePosition),
+  takeLatest(CryptoActionTypes.POST_SELL_REQUEST, handleSell),
 ]);

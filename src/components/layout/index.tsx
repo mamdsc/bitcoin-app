@@ -22,7 +22,9 @@ const LayoutContainer: React.FC = ({ children }) => {
             Depósitos
           </Menu.Item>
           <Menu.Item key="3">Compra</Menu.Item>
-          <Menu.Item key="4">Venda</Menu.Item>
+          <Menu.Item key="4" onClick={() => history.push('/vender')}>
+            Venda
+          </Menu.Item>
           <Menu.Item key="5">Extrato</Menu.Item>
           <Menu.Item key="6" onClick={signOut} style={{ float: 'right' }}>
             Sair

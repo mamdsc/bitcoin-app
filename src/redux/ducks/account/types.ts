@@ -4,7 +4,6 @@ export type IAccountState = {
   readonly balance: string;
   readonly isLoadingBalance: boolean;
   readonly errorBalance: IError;
-  readonly deposit: boolean;
   readonly isLoadingDeposit: boolean;
   readonly errorDeposit: IError;
 };

@@ -8,14 +8,12 @@ import { Container } from './styled';
 import Layout from '../../components/layout';
 import { IError } from '../../meta-data/interfaces/IError';
 import getValidationErrors from '../../utils/getValidationErrors';
-import {
-  fetchBalanceRequest,
-  postDepositRequest,
-} from '../../redux/ducks/account/actions';
+import { fetchBalanceRequest } from '../../redux/ducks/account/actions';
 import Input from '../../components/input';
 import { IAppState } from '../../redux';
+import { postSellRequest } from '../../redux/ducks/crypto/actions';
 
-const Deposit: React.FC = () => {
+const Sell: React.FC = () => {
   const balance: string = useSelector(
     (state: IAppState) => state.account.balance,
   );
@@ -47,7 +45,6 @@ const Deposit: React.FC = () => {
         setLoading(true);
         formRef.current?.setErrors({});
 
-        console.log(data.amount);
         const schema = Yup.object().shape({
           amount: Yup.string().required('Valor obrigatório'),
         });
@@ -56,7 +53,7 @@ const Deposit: React.FC = () => {
           abortEarly: false,
         });
 
-        dispatch(postDepositRequest(parseInt(data.amount)));
+        dispatch(postSellRequest(parseInt(data.amount)));
 
         toast('success', 'Depósito efetuado com sucesso', '');
       } catch (err) {
@@ -73,22 +70,21 @@ const Deposit: React.FC = () => {
     },
     [dispatch],
   );
-  const maskx = /[\d]+.[\d]+,[\d]/;
-  const arraym = [maskx];
+
   return (
     <Layout>
       <Container>
-        <h2>Depositar</h2>
+        <h2>Vender</h2>
         <div className="content">
           <Form ref={formRef} onSubmit={handleSubmit}>
-            <h2>Digite o valor que deseja depositar</h2>
+            <h2>Qual valor deseja vender?</h2>
             <Input name="amount" placeholder="R$ 0,00" />
             <Button loading={loading} htmlType="submit">
               Confirmar
             </Button>
           </Form>
           <div>
-            <h2>Saldo atual</h2>
+            <h2>Saldo</h2>
             <div>
               {isLoadingBalance ? (
                 <Skeleton.Input style={{ width: 200 }} />
@@ -103,4 +99,4 @@ const Deposit: React.FC = () => {
   );
 };
 
-export default Deposit;
+export default Sell;

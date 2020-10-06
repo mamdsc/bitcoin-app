@@ -33,6 +33,21 @@ const fetchPositionError = (message: IPrice): IReducerAction<IPrice> => ({
   payload: message,
 });
 
+const postSellRequest = (amount: number): IReducerAction<number> => ({
+  type: CryptoActionTypes.POST_SELL_REQUEST,
+  payload: amount,
+});
+
+const postSellSuccess = (sell: boolean): IReducerAction<boolean> => ({
+  type: CryptoActionTypes.POST_SELL_SUCCESS,
+  payload: sell,
+});
+
+const postSellError = (message: string): IReducerAction<string> => ({
+  type: CryptoActionTypes.POST_SELL_ERROR,
+  payload: message,
+});
+
 export {
   fetchPricesRequest,
   fetchPricesSuccess,
@@ -40,4 +55,7 @@ export {
   fetchPositionRequest,
   fetchPositionSuccess,
   fetchPositionError,
+  postSellRequest,
+  postSellSuccess,
+  postSellError,
 };

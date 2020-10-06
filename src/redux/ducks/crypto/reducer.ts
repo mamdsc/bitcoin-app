@@ -11,11 +11,14 @@ const INITIAL_STATE: ICryptoState = {
   position: [],
   isLoadingPosition: false,
   errorPosition: {} as IError,
+  sell: false,
+  isLoadingSell: false,
+  errorSell: {} as IError,
 };
 
 export default function accountReducer(
   state = INITIAL_STATE,
-  action: IReducerAction<IPrice | IError | IPosition[]>,
+  action: IReducerAction<IPrice | IError | IPosition[] | boolean>,
 ) {
   switch (action.type) {
     case CryptoActionTypes.FETCH_PRICE_REQUEST: {
@@ -58,6 +61,27 @@ export default function accountReducer(
         ...state,
         isLoadingPosition: false,
         errorPosition: action.payload as IError,
+      };
+    }
+    case CryptoActionTypes.POST_SELL_REQUEST: {
+      return {
+        ...state,
+        isLoadingSell: true,
+      };
+    }
+    case CryptoActionTypes.POST_SELL_SUCCESS: {
+      return {
+        ...state,
+        isLoadingSell: false,
+        sell: action.payload as boolean,
+        errorSell: {} as IError,
+      };
+    }
+    case CryptoActionTypes.POST_SELL_ERROR: {
+      return {
+        ...state,
+        isLoadingSell: false,
+        errorSell: action.payload as IError,
       };
     }
     default:

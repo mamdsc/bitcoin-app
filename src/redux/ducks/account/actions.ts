@@ -20,9 +20,9 @@ const postDepositRequest = (amount: number): IReducerAction<number> => ({
   payload: amount,
 });
 
-const postDepositSuccess = (deposit: boolean): IReducerAction<boolean> => ({
+const postDepositSuccess = (balance: string): IReducerAction<string> => ({
   type: AccountActionTypes.POST_DEPOSIT_SUCCESS,
-  payload: deposit,
+  payload: balance,
 });
 
 const postDepositError = (message: string): IReducerAction<string> => ({

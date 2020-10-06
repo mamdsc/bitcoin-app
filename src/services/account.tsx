@@ -5,7 +5,7 @@ const Account = {
   async getBalance(): Promise<AxiosResponse<{ balance: number }>> {
     return (await api.get('/account/balance')).data;
   },
-  async getDeposit(
+  async postDeposit(
     amount: number,
   ): Promise<AxiosResponse<{ balance: number }>> {
     return (
