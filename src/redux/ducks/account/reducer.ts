@@ -4,8 +4,8 @@ import { IError } from '../../../meta-data/interfaces/IError';
 
 const INITIAL_STATE: IAccountState = {
   balance: '',
-  isLoading: false,
-  error: {} as IError,
+  isLoadingBalance: false,
+  errorBalance: {} as IError,
 };
 
 export default function accountReducer(
@@ -16,22 +16,22 @@ export default function accountReducer(
     case AccountActionTypes.FETCH_BALANCE_REQUEST: {
       return {
         ...state,
-        isLoading: true,
+        isLoadingBalance: true,
       };
     }
     case AccountActionTypes.FETCH_BALANCE_SUCCESS: {
       return {
         ...state,
-        isLoading: false,
+        isLoadingBalance: false,
         balance: action.payload as string,
-        error: {} as IError,
+        errorBalance: {} as IError,
       };
     }
     case AccountActionTypes.FETCH_BALANCE_ERROR: {
       return {
         ...state,
-        isLoading: false,
-        error: action.payload as IError,
+        isLoadingBalance: false,
+        errorBalance: action.payload as IError,
       };
     }
     default:

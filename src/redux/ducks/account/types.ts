@@ -2,8 +2,8 @@ import { IError } from '../../../meta-data/interfaces/IError';
 
 export type IAccountState = {
   readonly balance: string;
-  readonly isLoading: boolean;
-  readonly error: IError;
+  readonly isLoadingBalance: boolean;
+  readonly errorBalance: IError;
 };
 
 export const AccountActionTypes = {
