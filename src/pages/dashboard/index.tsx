@@ -87,7 +87,7 @@ const Dashboard: React.FC = () => {
                 bordered={false}
                 loading={isLoadingPrices}
               >
-                {prices.buy}
+                {prices.buyFormated}
               </Card>
             </Col>
             <Col span={8}>
@@ -96,7 +96,7 @@ const Dashboard: React.FC = () => {
                 bordered={false}
                 loading={isLoadingPrices}
               >
-                {prices.sell}
+                {prices.sellFormated}
               </Card>
             </Col>
           </Row>

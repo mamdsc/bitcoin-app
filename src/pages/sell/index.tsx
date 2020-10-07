@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
@@ -20,8 +20,9 @@ const Sell: React.FC = () => {
   const isLoadingBalance: boolean = useSelector(
     (state: IAppState) => state.account.isLoadingBalance,
   );
-
-  const [loading, setLoading] = useState<boolean>(false);
+  const isLoadingSell: boolean = useSelector(
+    (state: IAppState) => state.crypto.isLoadingSell,
+  );
 
   const formRef = useRef<FormHandles>(null);
 
@@ -42,7 +43,6 @@ const Sell: React.FC = () => {
   const handleSubmit = useCallback(
     async (data: any) => {
       try {
-        setLoading(true);
         formRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
@@ -54,8 +54,7 @@ const Sell: React.FC = () => {
         });
 
         dispatch(postSellRequest(parseInt(data.amount)));
-
-        toast('success', 'Depósito efetuado com sucesso', '');
+        toast('success', 'Venda efetuada com sucesso', '');
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -64,8 +63,6 @@ const Sell: React.FC = () => {
           const error: IError = err;
           toast('error', 'Erro ao depositar', error.message);
         }
-      } finally {
-        setLoading(false);
       }
     },
     [dispatch],
@@ -79,7 +76,7 @@ const Sell: React.FC = () => {
           <Form ref={formRef} onSubmit={handleSubmit}>
             <h2>Qual valor deseja vender?</h2>
             <Input name="amount" placeholder="R$ 0,00" />
-            <Button loading={loading} htmlType="submit">
+            <Button loading={isLoadingSell} htmlType="submit">
               Confirmar
             </Button>
           </Form>

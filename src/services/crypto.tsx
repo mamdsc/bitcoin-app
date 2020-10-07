@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { IPositionResponse } from '../meta-data/interfaces/IPosition';
+import { IPurchase } from '../meta-data/interfaces/IPurchase';
 import api from './api';
 
 const Crypto = {
@@ -12,6 +13,13 @@ const Crypto = {
   async postSell(amount: number): Promise<AxiosResponse<boolean>> {
     return (
       await api.post('/btc/sell', {
+        amount,
+      })
+    ).data;
+  },
+  async postPurchase(amount: number): Promise<AxiosResponse<IPurchase>> {
+    return (
+      await api.post('/btc/purchase', {
         amount,
       })
     ).data;

@@ -3,6 +3,7 @@ import { IReducerAction } from '../rootReducer';
 import { IError } from '../../../meta-data/interfaces/IError';
 import { IPrice } from '../../../meta-data/interfaces/IPrice';
 import { IPosition } from '../../../meta-data/interfaces/IPosition';
+import { IPurchase } from '../../../meta-data/interfaces/IPurchase';
 
 const INITIAL_STATE: ICryptoState = {
   prices: {} as IPrice,
@@ -14,11 +15,14 @@ const INITIAL_STATE: ICryptoState = {
   sell: false,
   isLoadingSell: false,
   errorSell: {} as IError,
+  purchase: {} as IPurchase,
+  isLoadingPurchase: false,
+  errorPurchase: {} as IError,
 };
 
 export default function accountReducer(
   state = INITIAL_STATE,
-  action: IReducerAction<IPrice | IError | IPosition[] | boolean>,
+  action: IReducerAction<IPrice | IError | IPosition[] | boolean | IPurchase>,
 ) {
   switch (action.type) {
     case CryptoActionTypes.FETCH_PRICE_REQUEST: {
@@ -82,6 +86,27 @@ export default function accountReducer(
         ...state,
         isLoadingSell: false,
         errorSell: action.payload as IError,
+      };
+    }
+    case CryptoActionTypes.POST_PURCHASE_REQUEST: {
+      return {
+        ...state,
+        isLoadingPurchase: true,
+      };
+    }
+    case CryptoActionTypes.POST_PURCHASE_SUCCESS: {
+      return {
+        ...state,
+        isLoadingPurchase: false,
+        purchase: action.payload as IPurchase,
+        errorPurchase: {} as IError,
+      };
+    }
+    case CryptoActionTypes.POST_PURCHASE_ERROR: {
+      return {
+        ...state,
+        isLoadingPurchase: false,
+        errorPurchase: action.payload as IError,
       };
     }
     default:

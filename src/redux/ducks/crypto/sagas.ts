@@ -1,4 +1,4 @@
-import { put, all, takeLatest, call } from 'redux-saga/effects';
+import { put, all, takeLatest, call, select } from 'redux-saga/effects';
 import { format } from 'date-fns';
 import {
   IPosition,
@@ -11,6 +11,8 @@ import {
   fetchPositionSuccess,
   fetchPricesError,
   fetchPricesSuccess,
+  postPurchaseError,
+  postPurchaseSuccess,
   postSellError,
   postSellSuccess,
 } from './actions';
@@ -18,14 +20,18 @@ import { CryptoActionTypes } from './types';
 import { DAY_MONTH_YEAR_HOUR } from '../../../utils/constants';
 import { IReducerAction } from '../rootReducer';
 import { fetchBalanceRequest } from '../account/actions';
+import { IPrice } from '../../../meta-data/interfaces/IPrice';
+import { IAppState } from '../..';
 
 function* handlePrice() {
   try {
-    const response = yield call(Crypto.getPrices);
+    const response: IPrice = yield call(Crypto.getPrices);
     yield put(
       fetchPricesSuccess({
-        buy: formatCurrency(response.buy),
-        sell: formatCurrency(response.sell),
+        buy: response.buy,
+        sell: response.sell,
+        buyFormated: formatCurrency(response.buy),
+        sellFormated: formatCurrency(response.sell),
       }),
     );
   } catch (err) {
@@ -52,7 +58,11 @@ function* handlePosition() {
 
 function* handleSell(action: IReducerAction<number>) {
   try {
-    const response = yield call(Crypto.postSell, action.payload);
+    const cryptoSell: number = yield select(
+      (state: IAppState) => state.crypto.prices.sell,
+    );
+    const amount = action.payload / cryptoSell;
+    const response = yield call(Crypto.postSell, amount);
     yield put(postSellSuccess(response));
     yield put(fetchBalanceRequest());
   } catch (err) {
@@ -60,8 +70,19 @@ function* handleSell(action: IReducerAction<number>) {
   }
 }
 
+function* handlePurchase(action: IReducerAction<number>) {
+  try {
+    const response = yield call(Crypto.postPurchase, action.payload);
+    yield put(postPurchaseSuccess(response));
+    yield put(fetchBalanceRequest());
+  } catch (err) {
+    yield put(postPurchaseError(err));
+  }
+}
+
 export default all([
   takeLatest(CryptoActionTypes.FETCH_PRICE_REQUEST, handlePrice),
   takeLatest(CryptoActionTypes.FETCH_POSITION_REQUEST, handlePosition),
   takeLatest(CryptoActionTypes.POST_SELL_REQUEST, handleSell),
+  takeLatest(CryptoActionTypes.POST_PURCHASE_REQUEST, handlePurchase),
 ]);

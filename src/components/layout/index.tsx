@@ -21,7 +21,9 @@ const LayoutContainer: React.FC = ({ children }) => {
           <Menu.Item key="2" onClick={() => history.push('/depositar')}>
             Depósitos
           </Menu.Item>
-          <Menu.Item key="3">Compra</Menu.Item>
+          <Menu.Item key="3" onClick={() => history.push('/comprar')}>
+            Compra
+          </Menu.Item>
           <Menu.Item key="4" onClick={() => history.push('/vender')}>
             Venda
           </Menu.Item>

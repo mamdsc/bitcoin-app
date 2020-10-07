@@ -2,6 +2,7 @@ import { CryptoActionTypes } from './types';
 import { IReducerAction } from '../rootReducer';
 import { IPrice } from '../../../meta-data/interfaces/IPrice';
 import { IPosition } from '../../../meta-data/interfaces/IPosition';
+import { IPurchase } from '../../../meta-data/interfaces/IPurchase';
 
 const fetchPricesRequest = () => ({
   type: CryptoActionTypes.FETCH_PRICE_REQUEST,
@@ -48,6 +49,23 @@ const postSellError = (message: string): IReducerAction<string> => ({
   payload: message,
 });
 
+const postPurchaseRequest = (amount: number): IReducerAction<number> => ({
+  type: CryptoActionTypes.POST_PURCHASE_REQUEST,
+  payload: amount,
+});
+
+const postPurchaseSuccess = (
+  purchase: IPurchase,
+): IReducerAction<IPurchase> => ({
+  type: CryptoActionTypes.POST_PURCHASE_SUCCESS,
+  payload: purchase,
+});
+
+const postPurchaseError = (message: string): IReducerAction<string> => ({
+  type: CryptoActionTypes.POST_PURCHASE_ERROR,
+  payload: message,
+});
+
 export {
   fetchPricesRequest,
   fetchPricesSuccess,
@@ -58,4 +76,7 @@ export {
   postSellRequest,
   postSellSuccess,
   postSellError,
+  postPurchaseRequest,
+  postPurchaseSuccess,
+  postPurchaseError,
 };

@@ -1,4 +1,6 @@
 export interface IPrice {
-  buy: string;
-  sell: string;
+  buyFormated: string;
+  sellFormated: string;
+  buy: number;
+  sell: number;
 }

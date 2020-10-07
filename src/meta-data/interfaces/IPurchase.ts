@@ -1,4 +1,4 @@
-export interface IPurchaseResponse {
+export interface IPurchase {
   liquidatedAt: string;
   userId: string;
   purchasePrice: number;

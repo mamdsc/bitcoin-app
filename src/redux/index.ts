@@ -15,7 +15,7 @@ export type IAppState = {
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['account'],
+  blacklist: ['account', 'crypto'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
