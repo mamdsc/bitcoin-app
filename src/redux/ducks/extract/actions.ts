@@ -3,8 +3,12 @@ import { IReducerAction } from '../rootReducer';
 import { IExtract } from '../../../meta-data/interfaces/IExtract';
 import { IError } from '../../../meta-data/interfaces/IError';
 
-const fetchExtractRequest = () => ({
+const fetchExtractRequest = (
+  startDate: string,
+  endDate: string,
+): IReducerAction<{ startDate: string; endDate: string }> => ({
   type: ExtractActionTypes.FETCH_EXTRACT_REQUEST,
+  payload: { startDate, endDate },
 });
 
 const fetchExtractSuccess = (
