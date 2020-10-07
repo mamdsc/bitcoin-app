@@ -27,6 +27,8 @@ const Extract: React.FC = () => {
   useEffect(() => {
     if (startDate && endDate) {
       dispatch(fetchExtractRequest(startDate, endDate));
+    } else {
+      dispatch(fetchExtractRequest('', ''));
     }
   }, [dispatch, endDate, startDate]);
 
