@@ -50,21 +50,24 @@ const Extract: React.FC = () => {
         ) : (
           <Timeline mode="left" className="timeline">
             {listExtract && listExtract.length > 0
-              ? listExtract.map(extract => (
-                <Timeline.Item
-                    key={extract.id}
-                    label={`(${extract.type}) ${extract.createdAt}`}
-                    color={
-                      extract.type === ETypeExtract.investment
-                        ? 'green'
-                        : extract.type === ETypeExtract.liquidation
-                        ? 'red'
-                        : 'blue'
-                    }
-                  >
-                    <div>{`Valor: ${extract.value}`}</div>
-                  </Timeline.Item>
-                ))
+              ? listExtract.map(extract => {
+                  const color =
+                    extract.type === ETypeExtract.investment
+                      ? 'green'
+                      : extract.type === ETypeExtract.liquidation
+                      ? 'red'
+                      : 'blue';
+
+                  return (
+                    <Timeline.Item
+                      key={extract.id}
+                      label={`(${extract.type}) ${extract.createdAt}`}
+                      color={color}
+                    >
+                      <div>{`Valor: ${extract.value}`}</div>
+                    </Timeline.Item>
+                  );
+                })
               : startDate && endDate && <h3>Não há extrato</h3>}
           </Timeline>
         )}

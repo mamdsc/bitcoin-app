@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
-import { Button, notification, Skeleton, Modal } from 'antd';
+import { Button, Modal } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Container } from './styled';
 import Layout from '../../components/layout';
@@ -14,6 +14,8 @@ import Input from '../../components/input';
 import { IAppState } from '../../redux';
 import { postPurchaseRequest } from '../../redux/ducks/crypto/actions';
 import { formatCurrency } from '../../utils/formatCurrency';
+import Balance from '../../components/balance';
+import toast from '../../utils/toast';
 
 const { confirm } = Modal;
 
@@ -41,14 +43,6 @@ const Purchase: React.FC = () => {
     dispatch(fetchBalanceRequest());
   }, [dispatch]);
 
-  const toast = (type: string, message: string, description: string) => {
-    // @ts-ignore
-    notification[type]({
-      message,
-      description,
-    });
-  };
-
   const handleSubmit = useCallback(
     async (data: any) => {
       try {
@@ -62,7 +56,7 @@ const Purchase: React.FC = () => {
           abortEarly: false,
         });
 
-        dispatch(postPurchaseRequest(parseInt(data.amount)));
+        dispatch(postPurchaseRequest(Number(data.amount)));
         toast('success', 'Compra efetuada com sucesso', '');
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
@@ -103,22 +97,13 @@ const Purchase: React.FC = () => {
               name="amount"
               placeholder="0"
               type="number"
-              onChange={e => setAmountValue(parseInt(e.target.value))}
+              onChange={e => setAmountValue(Number(e.target.value))}
             />
             <Button loading={isLoadingPurchase} onClick={showConfirm}>
               Confirmar
             </Button>
           </Form>
-          <div>
-            <h2>Saldo</h2>
-            <div>
-              {isLoadingBalance ? (
-                <Skeleton.Input style={{ width: 200 }} />
-              ) : (
-                balance
-              )}
-            </div>
-          </div>
+          <Balance value={balance} isLoading={isLoadingBalance} />
         </div>
       </Container>
     </Layout>

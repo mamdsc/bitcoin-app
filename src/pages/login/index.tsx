@@ -4,7 +4,7 @@ import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
-import { Button, notification } from 'antd';
+import { Button } from 'antd';
 import { Background, Container, Content } from './styled';
 import Input from '../../components/input';
 import getValidationErrors from '../../utils/getValidationErrors';
@@ -12,6 +12,7 @@ import { useAuth } from '../../hooks/authContext';
 import ILogin from '../../meta-data/interfaces/ILogin';
 import logo from '../../assets/img/logo.png';
 import { IError } from '../../meta-data/interfaces/IError';
+import toast from '../../utils/toast';
 
 const Login: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -19,14 +20,6 @@ const Login: React.FC = () => {
 
   const { signIn } = useAuth();
   const history = useHistory();
-
-  const toast = (type: string, message: string, description: string) => {
-    // @ts-ignore
-    notification[type]({
-      message,
-      description,
-    });
-  };
 
   const handleSubmit = useCallback(
     async (data: ILogin) => {

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
-import { Button, notification, Skeleton } from 'antd';
+import { Button } from 'antd';
 import { Container } from './styled';
 import Layout from '../../components/layout';
 import { IError } from '../../meta-data/interfaces/IError';
@@ -14,6 +14,8 @@ import {
 } from '../../redux/ducks/account/actions';
 import Input from '../../components/input';
 import { IAppState } from '../../redux';
+import Balance from '../../components/balance';
+import toast from '../../utils/toast';
 
 const Deposit: React.FC = () => {
   const balance: string = useSelector(
@@ -34,14 +36,6 @@ const Deposit: React.FC = () => {
     dispatch(fetchBalanceRequest());
   }, [dispatch]);
 
-  const toast = (type: string, message: string, description: string) => {
-    // @ts-ignore
-    notification[type]({
-      message,
-      description,
-    });
-  };
-
   const handleSubmit = useCallback(
     async (data: any) => {
       try {
@@ -55,7 +49,7 @@ const Deposit: React.FC = () => {
           abortEarly: false,
         });
 
-        dispatch(postDepositRequest(parseInt(data.amount)));
+        dispatch(postDepositRequest(Number(data.amount)));
         toast('success', 'Depósito efetuado com sucesso', '');
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
@@ -82,16 +76,7 @@ const Deposit: React.FC = () => {
               Confirmar
             </Button>
           </Form>
-          <div>
-            <h2>Saldo atual</h2>
-            <div>
-              {isLoadingBalance ? (
-                <Skeleton.Input style={{ width: 200 }} />
-              ) : (
-                balance
-              )}
-            </div>
-          </div>
+          <Balance value={balance} isLoading={isLoadingBalance} />
         </div>
       </Container>
     </Layout>

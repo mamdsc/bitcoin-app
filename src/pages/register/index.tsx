@@ -4,7 +4,7 @@ import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
-import { Button, notification } from 'antd';
+import { Button } from 'antd';
 import { Container, Content, Background } from './styled';
 import logo from '../../assets/img/logo.png';
 import getValidationErrors from '../../utils/getValidationErrors';
@@ -13,18 +13,11 @@ import { IRegister } from '../../meta-data/interfaces/IRegister';
 import Input from '../../components/input';
 
 import { IError } from '../../meta-data/interfaces/IError';
+import toast from '../../utils/toast';
 
 const Register: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
-
-  const toast = (type: string, message: string, description: string) => {
-    // @ts-ignore
-    notification[type]({
-      message,
-      description,
-    });
-  };
 
   const handleSubmit = useCallback(
     async (data: IRegister) => {

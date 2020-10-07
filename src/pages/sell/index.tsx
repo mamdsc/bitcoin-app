@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
-import { Button, notification, Skeleton } from 'antd';
+import { Button } from 'antd';
 import { Container } from './styled';
 import Layout from '../../components/layout';
 import { IError } from '../../meta-data/interfaces/IError';
@@ -12,6 +12,8 @@ import { fetchBalanceRequest } from '../../redux/ducks/account/actions';
 import Input from '../../components/input';
 import { IAppState } from '../../redux';
 import { postSellRequest } from '../../redux/ducks/crypto/actions';
+import Balance from '../../components/balance';
+import toast from '../../utils/toast';
 
 const Sell: React.FC = () => {
   const balance: string = useSelector(
@@ -32,14 +34,6 @@ const Sell: React.FC = () => {
     dispatch(fetchBalanceRequest());
   }, [dispatch]);
 
-  const toast = (type: string, message: string, description: string) => {
-    // @ts-ignore
-    notification[type]({
-      message,
-      description,
-    });
-  };
-
   const handleSubmit = useCallback(
     async (data: any) => {
       try {
@@ -53,7 +47,7 @@ const Sell: React.FC = () => {
           abortEarly: false,
         });
 
-        dispatch(postSellRequest(parseInt(data.amount)));
+        dispatch(postSellRequest(Number(data.amount)));
         toast('success', 'Venda efetuada com sucesso', '');
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
@@ -80,16 +74,7 @@ const Sell: React.FC = () => {
               Confirmar
             </Button>
           </Form>
-          <div>
-            <h2>Saldo</h2>
-            <div>
-              {isLoadingBalance ? (
-                <Skeleton.Input style={{ width: 200 }} />
-              ) : (
-                balance
-              )}
-            </div>
-          </div>
+          <Balance value={balance} isLoading={isLoadingBalance} />
         </div>
       </Container>
     </Layout>

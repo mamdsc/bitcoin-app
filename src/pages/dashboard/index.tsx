@@ -1,5 +1,5 @@
 import { Row, Col, Card, Table } from 'antd';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import HistoryChart from '../../components/chart';
 import Layout from '../../components/layout';
@@ -50,33 +50,36 @@ const Dashboard: React.FC = () => {
     dispatch(fetchHistoryPriceRequest());
   }, [dispatch]);
 
-  const columns = [
-    {
-      title: 'Data da compra',
-      dataIndex: 'purchasedDate',
-      key: 'purchasedDate',
-    },
-    {
-      title: 'Valor investido',
-      dataIndex: 'purchaseAmount',
-      key: 'purchaseAmount',
-    },
-    {
-      title: 'Valor do btc compra',
-      dataIndex: 'purchasedBtcAmount',
-      key: 'purchasedBtcAmount',
-    },
-    {
-      title: 'Percentual de variação',
-      dataIndex: 'variation',
-      key: 'variation',
-    },
-    {
-      title: 'Valor bruto atual',
-      dataIndex: 'currentBtcAmount',
-      key: 'currentBtcAmount',
-    },
-  ];
+  const columns = useMemo(
+    () => [
+      {
+        title: 'Data da compra',
+        dataIndex: 'purchasedDate',
+        key: 'purchasedDate',
+      },
+      {
+        title: 'Valor investido',
+        dataIndex: 'purchaseAmount',
+        key: 'purchaseAmount',
+      },
+      {
+        title: 'Valor do btc compra',
+        dataIndex: 'purchasedBtcAmount',
+        key: 'purchasedBtcAmount',
+      },
+      {
+        title: 'Percentual de variação',
+        dataIndex: 'variation',
+        key: 'variation',
+      },
+      {
+        title: 'Valor bruto atual',
+        dataIndex: 'currentBtcAmount',
+        key: 'currentBtcAmount',
+      },
+    ],
+    [],
+  );
 
   return (
     <Layout>

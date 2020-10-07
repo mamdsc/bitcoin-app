@@ -44,9 +44,10 @@
       ],
       "prettier/prettier": "error",
       "react/jsx-props-no-spreading": "off",
-        "react/prop-types": "off",
-        "no-unused-expressions": "off",
-        "@typescript-eslint/camelcase": "off"
+      "react/prop-types": "off",
+      "no-unused-expressions": "off",
+      "@typescript-eslint/camelcase": "off",
+      "no-nested-ternary": "off"
     },
     "settings": {
       "import/resolver": {
