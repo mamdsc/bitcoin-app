@@ -47,7 +47,6 @@ const Deposit: React.FC = () => {
       try {
         formRef.current?.setErrors({});
 
-        console.log(data.amount);
         const schema = Yup.object().shape({
           amount: Yup.string().required('Valor obrigatório'),
         });

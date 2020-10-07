@@ -6,16 +6,18 @@ import { IAccountState } from './ducks/account/types';
 import { ICryptoState } from './ducks/crypto/types';
 import rootReducer from './ducks/rootReducer';
 import rootSaga from './ducks/rootSaga';
+import { IHistoryState } from './ducks/history/types';
 
 export type IAppState = {
   account: IAccountState;
   crypto: ICryptoState;
+  history: IHistoryState;
 };
 
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['account', 'crypto'],
+  blacklist: ['account', 'crypto', 'history'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

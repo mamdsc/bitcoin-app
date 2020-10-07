@@ -1,6 +1,7 @@
 import { Row, Col, Card, Table } from 'antd';
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import HistoryChart from '../../components/chart';
 import Layout from '../../components/layout';
 import { IPosition } from '../../meta-data/interfaces/IPosition';
 import { IPrice } from '../../meta-data/interfaces/IPrice';
@@ -70,6 +71,9 @@ const Dashboard: React.FC = () => {
     <Layout>
       <Container>
         <h2>Dashboard</h2>
+
+        <HistoryChart />
+
         <div className="cards">
           <Row gutter={16}>
             <Col span={8}>
