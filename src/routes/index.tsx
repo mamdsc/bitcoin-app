@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch } from 'react-router-dom';
 import Dashboard from '../pages/dashboard';
 import Deposit from '../pages/deposit';
+import Extract from '../pages/extract';
 import Login from '../pages/login';
 import Purchase from '../pages/purchase';
 import Register from '../pages/register';
@@ -16,6 +17,7 @@ const Routes: React.FC = () => (
     <RouteContainer path="/depositar" component={Deposit} isPrivate />
     <RouteContainer path="/vender" component={Sell} isPrivate />
     <RouteContainer path="/comprar" component={Purchase} isPrivate />
+    <RouteContainer path="/extrato" component={Extract} isPrivate />
   </Switch>
 );
 

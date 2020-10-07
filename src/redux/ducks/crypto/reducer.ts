@@ -20,7 +20,7 @@ const INITIAL_STATE: ICryptoState = {
   errorPurchase: {} as IError,
 };
 
-export default function accountReducer(
+export default function cryptoReducer(
   state = INITIAL_STATE,
   action: IReducerAction<IPrice | IError | IPosition[] | boolean | IPurchase>,
 ) {

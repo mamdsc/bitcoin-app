@@ -1,6 +1,6 @@
 import { put, all, takeLatest, call } from 'redux-saga/effects';
 import { format, isAfter } from 'date-fns';
-import History from '../../../services/history';
+import HistoryService from '../../../services/history';
 import { HistoryActionTypes } from './types';
 import { IHistoryPriceResponse } from '../../../meta-data/interfaces/IHistoryPrice';
 import { fetchHistoryPriceError, fetchHistoryPriceSuccess } from './actions';
@@ -9,7 +9,7 @@ import { DAY_MONTH_YEAR_HOUR } from '../../../utils/constants';
 function* handleHistoryPrice() {
   try {
     const response: IHistoryPriceResponse[] = yield call(
-      History.getHistoryPrices,
+      HistoryService.getHistoryPrices,
     );
 
     const twentyFourHoursAgo = new Date();

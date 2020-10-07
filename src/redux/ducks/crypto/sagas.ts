@@ -4,7 +4,7 @@ import {
   IPosition,
   IPositionResponse,
 } from '../../../meta-data/interfaces/IPosition';
-import Crypto from '../../../services/crypto';
+import CryptoService from '../../../services/crypto';
 import { formatCurrency } from '../../../utils/formatCurrency';
 import {
   fetchPositionError,
@@ -25,7 +25,7 @@ import { IAppState } from '../..';
 
 function* handlePrice() {
   try {
-    const response: IPrice = yield call(Crypto.getPrices);
+    const response: IPrice = yield call(CryptoService.getPrices);
     yield put(
       fetchPricesSuccess({
         buy: response.buy,
@@ -41,7 +41,7 @@ function* handlePrice() {
 
 function* handlePosition() {
   try {
-    const response: IPositionResponse[] = yield call(Crypto.getPosition);
+    const response: IPositionResponse[] = yield call(CryptoService.getPosition);
     const formatResponse: IPosition[] = response.map(resp => ({
       id: resp.id,
       purchasedBtcAmount: formatCurrency(resp.purchasedBtcAmount),
@@ -62,7 +62,7 @@ function* handleSell(action: IReducerAction<number>) {
       (state: IAppState) => state.crypto.prices.sell,
     );
     const amount = action.payload / cryptoSell;
-    const response = yield call(Crypto.postSell, amount);
+    const response = yield call(CryptoService.postSell, amount);
     yield put(postSellSuccess(response));
     yield put(fetchBalanceRequest());
   } catch (err) {
@@ -72,7 +72,7 @@ function* handleSell(action: IReducerAction<number>) {
 
 function* handlePurchase(action: IReducerAction<number>) {
   try {
-    const response = yield call(Crypto.postPurchase, action.payload);
+    const response = yield call(CryptoService.postPurchase, action.payload);
     yield put(postPurchaseSuccess(response));
     yield put(fetchBalanceRequest());
   } catch (err) {

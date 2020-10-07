@@ -33,7 +33,7 @@ const HistoryChart: React.FC = () => {
   return (
     <Container>
       {isLoadingHistoryPrices ? (
-        <Skeleton />
+        <Skeleton active />
       ) : (
         <ResponsiveContainer>
           <LineChart

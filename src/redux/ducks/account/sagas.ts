@@ -1,5 +1,5 @@
 import { put, all, takeLatest, call } from 'redux-saga/effects';
-import Account from '../../../services/account';
+import AccountService from '../../../services/account';
 import { formatCurrency } from '../../../utils/formatCurrency';
 import { IReducerAction } from '../rootReducer';
 import {
@@ -11,7 +11,7 @@ import { AccountActionTypes } from './types';
 
 function* handleBalance() {
   try {
-    const response = yield call(Account.getBalance);
+    const response = yield call(AccountService.getBalance);
     yield put(fetchBalanceSuccess(formatCurrency(response.balance)));
   } catch (err) {
     yield put(fetchBalanceError(err));
@@ -20,7 +20,7 @@ function* handleBalance() {
 
 function* handleDeposit(action: IReducerAction<number>) {
   try {
-    const response = yield call(Account.postDeposit, action.payload);
+    const response = yield call(AccountService.postDeposit, action.payload);
     yield put(postDepositSuccess(formatCurrency(response.balance)));
   } catch (err) {
     yield put(fetchBalanceError(err));

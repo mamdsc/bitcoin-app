@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import api from './api';
 
-const Account = {
+const AccountService = {
   async getBalance(): Promise<AxiosResponse<{ balance: number }>> {
     return (await api.get('/account/balance')).data;
   },
@@ -16,4 +16,4 @@ const Account = {
   },
 };
 
-export default Account;
+export default AccountService;

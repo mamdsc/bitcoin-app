@@ -3,7 +3,7 @@ import { IPositionResponse } from '../meta-data/interfaces/IPosition';
 import { IPurchase } from '../meta-data/interfaces/IPurchase';
 import api from './api';
 
-const Crypto = {
+const CryptoService = {
   async getPosition(): Promise<AxiosResponse<IPositionResponse[]>> {
     return (await api.get('/btc')).data;
   },
@@ -26,4 +26,4 @@ const Crypto = {
   },
 };
 
-export default Crypto;
+export default CryptoService;

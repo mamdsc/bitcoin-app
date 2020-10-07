@@ -9,7 +9,7 @@ const INITIAL_STATE: IHistoryState = {
   errorHistoryPrices: {} as IError,
 };
 
-export default function accountReducer(
+export default function historyReducer(
   state = INITIAL_STATE,
   action: IReducerAction<IHistoryPrice[] | IError>,
 ) {
