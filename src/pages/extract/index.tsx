@@ -33,6 +33,7 @@ const Extract: React.FC = () => {
             {listExtract &&
               listExtract.map(extract => (
                 <Timeline.Item
+                  key={extract.id}
                   label={`(${extract.type}) ${extract.createdAt}`}
                   color={
                     extract.type === ETypeExtract.investment

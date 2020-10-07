@@ -1,6 +1,6 @@
 import { Skeleton } from 'antd';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import {
   LineChart,
   Line,
@@ -13,7 +13,6 @@ import {
 } from 'recharts';
 import { IHistoryPrice } from '../../meta-data/interfaces/IHistoryPrice';
 import { IAppState } from '../../redux';
-import { fetchHistoryPriceRequest } from '../../redux/ducks/history/actions';
 import { Container } from './styled';
 
 const HistoryChart: React.FC = () => {
@@ -23,12 +22,6 @@ const HistoryChart: React.FC = () => {
   const isLoadingHistoryPrices: boolean = useSelector(
     (state: IAppState) => state.history.isLoadingHistoryPrices,
   );
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchHistoryPriceRequest());
-  }, [dispatch]);
 
   return (
     <Container>

@@ -44,6 +44,7 @@ function* handlePosition() {
     const response: IPositionResponse[] = yield call(CryptoService.getPosition);
     const formatResponse: IPosition[] = response.map(resp => ({
       id: resp.id,
+      key: resp.id,
       purchasedBtcAmount: formatCurrency(resp.purchasedBtcAmount),
       variation: formatCurrency(resp.variation),
       currentBtcAmount: formatCurrency(resp.currentBtcAmount),

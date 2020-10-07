@@ -6,12 +6,14 @@ import rootReducer from './ducks/rootReducer';
 import rootSaga from './ducks/rootSaga';
 import { IHistoryState } from './ducks/history/types';
 import { IExtractState } from './ducks/extract/types';
+import { IVolumeState } from './ducks/volume/types';
 
 export type IAppState = {
   account: IAccountState;
   crypto: ICryptoState;
   history: IHistoryState;
   extract: IExtractState;
+  volume: IVolumeState;
 };
 
 const sagaMiddleware = createSagaMiddleware();

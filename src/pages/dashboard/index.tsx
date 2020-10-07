@@ -5,12 +5,15 @@ import HistoryChart from '../../components/chart';
 import Layout from '../../components/layout';
 import { IPosition } from '../../meta-data/interfaces/IPosition';
 import { IPrice } from '../../meta-data/interfaces/IPrice';
+import { IVolume } from '../../meta-data/interfaces/IVolume';
 import { IAppState } from '../../redux';
 import { fetchBalanceRequest } from '../../redux/ducks/account/actions';
 import {
   fetchPositionRequest,
   fetchPricesRequest,
 } from '../../redux/ducks/crypto/actions';
+import { fetchHistoryPriceRequest } from '../../redux/ducks/history/actions';
+import { fetchVolumeRequest } from '../../redux/ducks/volume/actions';
 import { Container } from './styled';
 
 const Dashboard: React.FC = () => {
@@ -30,6 +33,12 @@ const Dashboard: React.FC = () => {
   const isLoadingPosition: boolean = useSelector(
     (state: IAppState) => state.crypto.isLoadingPosition,
   );
+  const volume: IVolume = useSelector(
+    (state: IAppState) => state.volume.volume,
+  );
+  const isLoadingVolume: boolean = useSelector(
+    (state: IAppState) => state.volume.isLoadingVolume,
+  );
 
   const dispatch = useDispatch();
 
@@ -37,6 +46,8 @@ const Dashboard: React.FC = () => {
     dispatch(fetchBalanceRequest());
     dispatch(fetchPricesRequest());
     dispatch(fetchPositionRequest());
+    dispatch(fetchVolumeRequest());
+    dispatch(fetchHistoryPriceRequest());
   }, [dispatch]);
 
   const columns = [
@@ -108,13 +119,21 @@ const Dashboard: React.FC = () => {
         <div className="cards">
           <Row gutter={16}>
             <Col span={8}>
-              <Card title="Bitcoins comprados hoje" bordered={false}>
-                Card content
+              <Card
+                title="Bitcoins comprados hoje"
+                bordered={false}
+                loading={isLoadingVolume}
+              >
+                {volume.buy}
               </Card>
             </Col>
             <Col span={8}>
-              <Card title="Bitcoins vendidos hoje" bordered={false}>
-                Card content
+              <Card
+                title="Bitcoins vendidos hoje"
+                bordered={false}
+                loading={isLoadingVolume}
+              >
+                {volume.sell}
               </Card>
             </Col>
           </Row>

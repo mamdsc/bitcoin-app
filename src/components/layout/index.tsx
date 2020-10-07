@@ -14,7 +14,7 @@ const LayoutContainer: React.FC = ({ children }) => {
     <Container>
       <Header>
         <div className="logo" />
-        <Menu theme="dark" mode="horizontal" className="menu-header">
+        <Menu mode="horizontal" className="menu-header">
           <Menu.Item key="1" onClick={() => history.push('/home')}>
             Dashboard
           </Menu.Item>

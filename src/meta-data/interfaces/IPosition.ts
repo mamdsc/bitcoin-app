@@ -12,6 +12,7 @@ export interface IPositionResponse {
 
 export interface IPosition {
   id: string;
+  key: string;
   purchasedDate: string;
   purchaseAmount: string;
   purchasedBtcAmount: string;
