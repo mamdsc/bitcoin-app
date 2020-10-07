@@ -1,44 +1,57 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Bitcoin App
 
-## Available Scripts
+## Arquivos e Pastas
 
-In the project directory, you can run:
+- Assets: Arquivos estaticos;
+- Components: Componentes reutilizáveis;
+- Hooks: Hook customizados;
+- Meta-data: Estrutura de dados da aplicação como interfaces, enums, etc;
+- Pages: Páginas da aplicação;
+- Redux: Estrutura redux para controle de estado e melhor organização;
+- Routes: Rotas do sistema;
+- Service: Fornece serviços necessários para aplicação;
+- Styles: Estilos globais;
+- Utils: Funções ou constantes reutilizáveis.
 
-### `yarn start`
+## Tecnologias
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- React
+- Typescript
+- Styled-Components
+- Redux
+- Redux Saga
+- Axios
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+```bash
+Hook - AuthContext: Optei em criar um contexto para tratamento da autenticação do sistema. Mesmo utilizando redux? Sim. Já fiz essa combinação, porém, encarei alguns problemas em um projeto com maior complexidade de autenticação, nesse sentido um contexto se mostrou uma forma mais maleavel de gerenciar (Apenas um ponto de vista que quis mostrar no bitcoin app), conseguindo isolamento da lógica de forma simples.
+```
 
-### `yarn test`
+## Testes
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Opto por testar hooks, pages e componentes, visto que são os processos mais desgastantes em testes manuais e os pontos de entrada da aplicação.
 
-### `yarn build`
+## Style guide
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Antd: Utilizei antd, uma lib de componentes muito completa, maleavel, bonita e de fácil uso, acelerando o desenvolvimento.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+#### Para rodar o projeto:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Depois de clonar o repositório:
 
-### `yarn eject`
+#### Iniciar a aplicação
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```bash
+$ yarn
+$ yarn start
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### Rodar testes
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```bash
+$ yarn test
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Melhorias
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Terminar testes
+- Melhorar dashboard
