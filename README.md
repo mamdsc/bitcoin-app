@@ -22,9 +22,8 @@
 - Redux Saga
 - Axios
 
-```
-Hook - AuthContext: Optei em criar um contexto para tratamento da autenticação do sistema. Mesmo utilizando redux? Sim. Já fiz essa combinação, porém, encarei alguns problemas em um projeto com maior complexidade de autenticação, nesse sentido um contexto se mostrou uma forma mais maleavel de gerenciar (Apenas um ponto de vista que quis mostrar no bitcoin app), conseguindo isolamento da lógica de forma simples.
-```
+* Hook - AuthContext: Optei em criar um contexto para tratamento da autenticação do sistema. Mesmo utilizando redux? Sim. Já fiz essa combinação, porém, encarei alguns problemas em um projeto com maior complexidade de autenticação, nesse sentido um contexto se mostrou uma forma mais maleavel de gerenciar (Apenas um ponto de vista que quis mostrar no bitcoin app), conseguindo isolamento da lógica de forma simples.
+
 
 ## Testes
 
